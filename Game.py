@@ -1,6 +1,34 @@
 import random as rand
 
 
+class CompWhite:
+    def __init__(self, strategy):
+        self.strategy = strategy
+
+    def decision(self, value, rem_races):
+        if self.strategy == "optimal":
+            if value >= (1 - white_win_prob(rem_races - 1)) ** (1 / (rem_races - 1)):
+                return 1
+            else:
+                return 0
+
+    choice_flag = 0
+
+
+class CompBlack:
+    def __init__(self, strategy):
+        self.strategy = strategy
+
+    def decision(self, value, rem_races):
+        if self.strategy == "optimal":
+            if value >= 0.5 ** (1 / (rem_races - 1)):
+                return 1
+            else:
+                return 0
+
+    choice_flag = 0
+
+
 def white_win_prob(N):  # We can compute values for n - 1 numbers at the start and keep it in an array to optimize code
     if N == 1:
         return 1
