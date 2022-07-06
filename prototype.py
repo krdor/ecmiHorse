@@ -45,3 +45,8 @@ for step in range(num_of_mc_steps):
     result += single_simulation(number_of_races)
 
 print(f"Probability of white win: {result/num_of_mc_steps}")
+
+
+
+
+
