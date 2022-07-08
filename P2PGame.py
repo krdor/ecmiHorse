@@ -1,35 +1,47 @@
 import random as rand
+import re
 
+def YNCheck(val):
+  if re.match("^[Y|N|n|y]$", val):
+    return val.upper()
+  else:
+    val = input("Answer should be Y or N:  ")
+    return YNCheck(val)
 
-# import re
+def IsNumberCheck(val):
+  if re.match("^[0-9]+$", val):
+    return int(val)
+  else:
+    val = input("Answer should be a numeric number:  ")
+    return IsNumberCheck(val)
 
-# def YNCheck(val):
-#   if re.match("^[Y|N|n|y]$", val):
-#     return val.upper()
-#   else:
-#     val = input("Answer should be Y or N:  ")
-#     return YNCheck(val)
+def YRCheck(val):
+  if re.match("^[Y|R|r|y]$", val):
+    return val.upper()
+  else:
+    val = input("Answer should be Y or R:  ")
+    return YRCheck(val)
 
-# def CheckNumber(val):
-#   if re.match("^[1-5]{1,1}$", val):
-#     return int(val)
-#   else:
-#     val = input("Your choose should be in range 1 to 5: ")
-#     return CheckNumber(val)
+def CheckNumber(val):
+  if re.match("^[1-5]{1,1}$", val):
+    return int(val)
+  else:
+    val = input("Your choose should be in range 1 to 5: ")
+    return CheckNumber(val)
 
-# def WBCheck(val):
-#   if re.match("^[W|B]$", val):
-#     return val.upper()
-#   else:
-#     val = input("Answer should be W or B: ")
-#     return WBCheck(val)
+def WBCheck(val):
+  if re.match("^[W|B]$", val):
+    return val.upper()
+  else:
+    val = input("Answer should be W or B: ")
+    return WBCheck(val)
 
-# def GndrCheck(val):
-#   if re.match("^[M|F|O|m|f|o]$", val):
-#     return val.upper()
-#   else:
-#     val = input("Answer should be M, F or O: ")
-#     return GndrCheck(val)
+def GndrCheck(val):
+  if re.match("^[M|F|O|m|f|o]$", val):
+    return val.upper()
+  else:
+    val = input("Answer should be M, F or O: ")
+    return GndrCheck(val)
 
 
 class Player:
@@ -46,41 +58,41 @@ def single_round(player_w, player_b, max, curr, reg, rej_prob_flg):
     if player_w.choice == -1 and player_b.choice == -1 and rej_prob_flg == 1:
         reject_prob = rand.random()
         print(f"{player_w.name}, there is {round(reject_prob * 100)}% risk your choice will be rejected!")
-        flg = input(f"{player_w.name}, do you want to claim this number? Y/N: ")
+        flg = YNCheck(input(f"{player_w.name}, do you want to claim this number? Y/N: "))
         if flg == 'Y':
             if rand.random() > reject_prob:
                 player_w.choice = speed
                 player_w.choice_moment = curr
             else:
                 print(f"Sorry {player_w.name} your choice have been rejected :(")
-                flg = input(f"{player_b.name}, do you want to claim this number? Y/N: ")
+                flg = YNCheck(input(f"{player_b.name}, do you want to claim this number? Y/N: "))
             if flg == 'Y':
                 player_b.choice = speed
                 player_b.choice_moment = curr
         elif flg == 'N':
-            flg = input(f"{player_b.name}, do you want to claim this number? Y/N: ")
+            flg = YNCheck(input(f"{player_b.name}, do you want to claim this number? Y/N: "))
             if flg == 'Y':
                 player_b.choice = speed
                 player_b.choice_moment = curr
     elif player_w.choice == -1 and player_b.choice == -1 and rej_prob_flg == 0:
-        flg = input(f"{player_w.name}, do you want to claim this number? Y/N: ")
+        flg = YNCheck(input(f"{player_w.name}, do you want to claim this number? Y/N: "))
         if flg == 'Y':
             player_w.choice = speed
             player_w.choice_moment = curr
         elif flg == 'N':
-            flg = input(f"{player_b.name}, do you want to claim this number? Y/N: ")
+            flg = YNCheck(input(f"{player_b.name}, do you want to claim this number? Y/N: "))
             if flg == 'Y':
                 player_b.choice = speed
                 player_b.choice_moment = curr
     elif player_w.choice == -1 and player_b.choice != -1:
-        flg = input(
-            f"{player_b.name}'s choice is {player_b.choice}.\n{player_w.name}, do you want to claim this number? Y/N: ")
+        flg = YNCheck(input(
+            f"{player_b.name}'s choice is {player_b.choice}.\n{player_w.name}, do you want to claim this number? Y/N: "))
         if flg == 'Y':
             player_w.choice = speed
             player_w.choice_moment = curr
     elif player_w.choice != -1 and player_b.choice == -1:
-        flg = input(
-            f"{player_w.name}'s choice is {player_w.choice}.\n{player_b.name}, do you want to claim this number? Y/N: ")
+        flg = YNCheck(input(
+            f"{player_w.name}'s choice is {player_w.choice}.\n{player_b.name}, do you want to claim this number? Y/N: "))
         if flg == 'Y':
             player_b.choice = speed
             player_b.choice_moment = curr
@@ -95,8 +107,8 @@ print(
 player_one_name = input("Please input a name for player 1: ")
 player_two_name = input("Please input a name for player 2: ")
 
-option_side_selection_method = input(
-    "If you want to do side selection yourself type 'Y', if you want it to be random type 'R': ")
+option_side_selection_method = YRCheck(input(
+    "If you want to do side selection yourself type 'Y', if you want it to be random type 'R': "))
 
 if option_side_selection_method == 'R':
     if rand.randint(0, 1) == 0:
@@ -110,7 +122,7 @@ if option_side_selection_method == 'R':
         black = Player(player_one_name)
         print(f"{player_one_name} is playing as black")
 elif option_side_selection_method == 'Y':
-    side_select_flag = input(f"Should {player_one_name} be on white side? Y/N: ")
+    side_select_flag = YNCheck(input(f"Should {player_one_name} be on white side? Y/N: "))
     if side_select_flag == 'Y':
         white = Player(player_one_name)
         print(f"{player_one_name} is playing as white")
@@ -122,16 +134,16 @@ elif option_side_selection_method == 'Y':
         black = Player(player_one_name)
         print(f"{player_one_name} is playing as black")
 
-number_of_rounds = int(input("How many rounds would you like to play? (We recommend around 10): "))
+number_of_rounds = IsNumberCheck(input("How many rounds would you like to play? (We recommend around 10): "))
 
 speed_table = [round(rand.random(), 4) for i in range(number_of_rounds)]
 
 option_reject = 0
-if input("Do you want to enable probability of white choice to be rejected? Y/N: ") == 'Y':
+if YNCheck(input("Do you want to enable probability of white choice to be rejected? Y/N: ")) == 'Y':
     option_reject = 1
 
 option_switch = 0
-if input("Do you want to enable priority switching between rounds?? Y/N: ") == 'Y':
+if YNCheck(input("Do you want to enable priority switching between rounds?? Y/N: ")) == 'Y':
     option_switch = 1
 
 for rnd in range(number_of_rounds):
