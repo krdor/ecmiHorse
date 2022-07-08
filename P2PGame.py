@@ -1,6 +1,37 @@
 import random as rand
 
 
+# import re
+
+# def YNCheck(val):
+#   if re.match("^[Y|N|n|y]$", val):
+#     return val.upper()
+#   else:
+#     val = input("Answer should be Y or N:  ")
+#     return YNCheck(val)
+
+# def CheckNumber(val):
+#   if re.match("^[1-5]{1,1}$", val):
+#     return int(val)
+#   else:
+#     val = input("Your choose should be in range 1 to 5: ")
+#     return CheckNumber(val)
+
+# def WBCheck(val):
+#   if re.match("^[W|B]$", val):
+#     return val.upper()
+#   else:
+#     val = input("Answer should be W or B: ")
+#     return WBCheck(val)
+
+# def GndrCheck(val):
+#   if re.match("^[M|F|O|m|f|o]$", val):
+#     return val.upper()
+#   else:
+#     val = input("Answer should be M, F or O: ")
+#     return GndrCheck(val)
+
+
 class Player:
     def __init__(self, name):
         self.name = name

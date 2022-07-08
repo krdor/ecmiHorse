@@ -29,6 +29,14 @@ def WBCheck(val):
         return WBCheck(val)
 
 
+def GndrCheck(val):
+    if re.match("^[M|F|O|m|f|o]$", val):
+        return val.upper()
+    else:
+        val = input("Answer should be M, F or O: ")
+        return GndrCheck(val)
+
+
 class CompBlack:
     def __init__(self, strategy):
         self.strategy = strategy
@@ -130,6 +138,7 @@ print(
     "than your opponent, which is the computer.\n")
 
 initials = input("How should we call you: ")
+gender = GndrCheck(input("Please select your gender. M = Male / F = Female / O = Other: "))
 game_mode = YNCheck(input("Would you like to play a testing mode? (Y/N):"))
 if game_mode == 'Y':
     number_of_races = int(input("Choose the amount of generated numbers: "))
@@ -168,12 +177,12 @@ speed_set = 0
 if bot.player_choice > bot.choice:
     winner = "Y O U   W O N !!!"
 
-    if game_mode == "N": writer.writerow((initials, player_side, choice, k - 1, 1))
+    if game_mode == "N": writer.writerow((initials, player_side, choice, k, 1, gender))
 
 else:
     winner = "Computer won :["
 
-    if game_mode == "N": writer.writerow((initials, player_side, choice, k, 0))
+    if game_mode == "N": writer.writerow((initials, player_side, choice, k, 0, gender))
 print(f"\nYour score: {bot.player_choice}\nComputer score: {bot.choice}")
 print(f"\n{winner}")
 
